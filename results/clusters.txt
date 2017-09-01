@@ -1,0 +1,120 @@
+Early-sentence non-word detection.
+  - Fires on “(“, “( a”, “8.”
+  - Some of these fire negative for things like “The” or  “Botswana”; others are ambivalent
+
+  en-es-0:24, en-ar-0:106, en-ru-0:474, en-zh-0:35, en-fr-0:146, en-ru-0:26, en-fr-0:490, en-zh-0:289, en-ru-0:61, en-fr-0:475, en-es-0:413
+
+“Hook-shaped” position neurons
+  - Fires high after position around 30
+  - Fires low before position around 30, slightly negative around 15 before coming back to zero.
+
+  en-en-0:172, en-en-0:59, en-ru-0:133, en-es-0:416, en-zh-0:259, en-ru-0:86, en-fr-0:496, en-ar-0:481
+
+First token identification neuron -- possibly length-predictive?
+  - First on the first token, distinguishing between different common first tokens
+  - Fires especially high on first tokens that are likely to be the start of a single-token line; i.e. look like they are going to be part of a title. E.g. “Education”, “Myanmar,” “Angola”, all of which were single-token section header lines
+
+  en-fr-0:141, en-es-0:444, en-ru-0:333, en-zh-0:440, en-ar-0:398, en-fr-0:48, en-ru-0:14
+
+“And” detector neuron
+  - Always fires on “and.”
+  - Otherwise ambivalent.
+
+  en-zh-0:216, en-ru-0:296, en-fr-0:214, en-ar-0:116, en-es-0:437, en-es-0:143, en-ar-0:133, en-fr-0:405, en-ru-0: 119, en-ru-0:148
+
+Date detection neuron
+  - Fires on numerical years and on names of months.
+  - Always puts those two in the same bucket.
+  - Fires extremely negative right before a date, specifically for numbers, like “4 November 2011” would have 4 extremely negative, but “November 2011” extremely positive
+
+  en-zh-0:373, en-es-0:428, en-zh-0:180, en-ru-0:432, en-ar-0:51, en-ar-0:492, en-ru-0:403
+
+End-of-sentence period detector
+  - Fires at the end of the sentence when the sentence ends with a period
+  - Seems to be specifically looking for end of sentence; “etc.” at end of line confuses it, for instance.
+  - Exactly one per network
+
+  en-fr-0:304, en-es-0:136, en-ru-0:227, en-ar-0:390, en-zh-0:213, en-ru-0:379
+
+This is also an “on”/”in” detector apparently
+  - Neurons that detects whether we are inside parentheses or quotes
+  - Fires when the token is inside “( a b c )” parentheses or “” a b c ”” quotes
+  - Usually both go in the same bucket
+  - Exactly one per network
+
+  en-ru-0:250, en-ar-0:112, en-zh-0:311, en-es-0:432, en-fr-0:194
+
+Bimodal comma detector
+  - Fires high on some commas and low on other commas. Pattern unclear.
+  - Fires near zero for non-comma tokens.
+
+  en-ru-0:3, en-fr-0:85, en-es-0:306, en-ar-0;112, en-fr-0:218, en-fr-0:211, en-zh-0:496
+
+Slash detector (?)
+  - Fires for the token “/”
+  - There are not many slashes, so this might also do something else, I’m not sure.
+
+  en-zh-0:204, en-fr-0:148, en-es-0:171, en-es-0:144, en-ar-0:46, en-zh-0:40
+
+Boring word identifiers
+  - A set of neurons seem to distinguish between “boring words”: “the”, “and”, “for”, “of”, etc.
+
+  En-ru-0:288, en-ar-0:452, en-es-0:442, en-fr-0:15, en-zh-0:98,  en-en-0: 376,134,331, en-fr-0:164, en-es-0:70, en-ru-0:404, en-es-0:386, en-ar-0:314, en-zh-0:45, en-fr-0:7, en-ru-0:275, en-ar-0:150
+
+Explicit “the” detectors
+  - Highly correlated to boring-word identifiers, but fire only for “the”
+
+  En-fr-0:254, en-es-0:257, en-zh-0:125, en-en-0:498
+
+Indicative past/present tense identifier
+  - Distinguishes between the past indicative tense and the present indicative tense
+  - Fires negative for “had”, “conducted”, “examined”, “endorsed”, “carried”
+  - Fires positive for “is”, “are”, “invites”, “recieves”
+  - Why only these two languages?
+
+  en-es-0:266, en-ar-0:351
+
+Infinitive and imperative verb detector
+  - Fires positive for infinite and imperative verb forms, e.g. “make”, “involve”, “increase”, “support”
+  - Fires negative for other verb forms, e.g. “made”, “provides”, “applies”
+
+  en-ru-0:116, en-es-0:242, en-ar-0:139, en-ar-0:203, en-zh-0:271, en-zh-0:14, en-fr-0:123, en-es-0:12
+
+Also seems to fire for passive verb forms
+  - Noun number identifier
+  - Fires positive for singular nouns
+  - Fires negative for plural nouns
+
+  en-en-0:190, en-fr-0:455, en-es-0:243, en-ru-0:46, en-ru-0:354, en-ar-0:468
+
+Adjective detector
+  - Fires positive for adjectives
+  - Ambivalent for other things
+
+  en-fr-0:255, en-es-0:138, en-ar-0:483, en-ru-0:313, en-fr-0:55
+
+Modifier/noun distinguishing neuron
+  - Vaguely, distinguishes between modifiers, like “Birth registration” and nouns, like “General measures”
+  - Frequently, this is actually accomplished just by determining position in a noun phrase, e.g. firing with one sign for the first word of a noun phrase and with the other sign for the rest of it
+
+  en-fr-0:322, en-ar-0:162, en-es-0:188, en-zh-0:164, en2-es-0:361, en-es-0:61, en-es-0:15, en-ar-0:435, en-ru-0:464, en-fr-0:13, en-es-0:357, en-ru-0:361
+
+  Another cluster has similar behavior:
+
+  En-ru-0:439, en-ar-0:157, en-fr-0:341, en-es-0:134, en-zh-0:319, en-ar-0:497, en-ar-0:96
+
+Negation detector
+   - Fires on any token that is part of a negated phrase
+
+    For example:
+
+    This objection does *not preclude the entry into force of the Convention between Mauritania and Finland .*
+    The Committee also notes that the State party *has not yet accepted the amendment to article 43 ( 2 ) of the Convention for an expansion of the Committee from 10 to 18 members .*
+    Right *not to be subjected to torture*
+
+  en-ru-0:330, en-es-0:336, en-ar-0:41, en-zh-0:225, en-fr-0:151
+
+Unusual conjunction detector
+  - Fires on “furthermore”, “however”, “also”, “in particular”, “thus”
+
+  en-es-0:465, en-es-0:327, en-ru-0:300, en-zh-0:97, en-zh-0:244, en-zh-0:485, en-fr-0:173 and friends
